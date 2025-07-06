@@ -1,0 +1,19 @@
+{
+  "name": "degustation-api",
+  "version": "1.0.0",
+  "description": "API для сохранения данных дегустаций в MongoDB Atlas",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "selfmadedegustation",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "mongodb": "^6.5.0"
+  }
+}
