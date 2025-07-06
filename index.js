@@ -28,47 +28,30 @@ async function connectToDB() {
 }
 
 app.post("/update-data", async (req, res) => {
-  console.log("📥 Получено тело запроса:", req.body);
+  const { sheets, timestamp } = req.body;
 
-  const { sheets, sheetName, row, values } = req.body;
+  if (!Array.isArray(sheets)) {
+    return res.status(400).json({ error: "Sheets must be an array" });
+  }
 
   try {
-    if (sheets && Array.isArray(sheets)) {
-      // Пришёл массив листов — вставляем несколько документов
-      const docs = sheets.map((sheet) => ({
-        timestamp: new Date(),
-        sheetName: sheet.sheetName,
-        values: sheet.values,
-      }));
+    const docs = sheets.map((sheet) => ({
+      timestamp: timestamp ? new Date(timestamp) : new Date(),
+      sheetName: sheet.sheetName,
+      values: sheet.values,
+      backgrounds: sheet.backgrounds,
+    }));
 
-      const result = await collection.insertMany(docs);
-      res
-        .status(200)
-        .json({
-          message: "Данные сохранены (много листов)",
-          insertedCount: result.insertedCount,
-        });
-    } else if (sheetName) {
-      // Старый формат: один лист, одна строка
-      const entry = {
-        timestamp: new Date(),
-        sheetName,
-        row,
-        values,
-      };
-      const result = await collection.insertOne(entry);
-      res
-        .status(200)
-        .json({
-          message: "Данные сохранены (один лист)",
-          id: result.insertedId,
-        });
-    } else {
-      res.status(400).json({ error: "Неправильный формат данных" });
-    }
+    const result = await collection.insertMany(docs);
+    res
+      .status(200)
+      .json({
+        message: "Данные сохранены",
+        insertedCount: result.insertedCount,
+      });
   } catch (err) {
-    console.error("❌ Ошибка при сохранении в MongoDB:", err);
-    res.status(500).json({ error: "Ошибка при сохранении" });
+    console.error("Ошибка сохранения:", err);
+    res.status(500).json({ error: "Ошибка при сохранении данных" });
   }
 });
 
