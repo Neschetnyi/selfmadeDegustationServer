@@ -13,6 +13,14 @@ export async function handleUpdateData(req, res, collection) {
       backgrounds: sheet.backgrounds,
     }));
 
+    // ✅ Логируем полученные данные
+    console.log("📥 Получены данные от Google Sheets:");
+    console.log("⏰ Время:", new Date().toISOString());
+    console.log("📄 Кол-во таблиц:", docs.length);
+    docs.forEach((doc, i) => {
+      console.log(`--- Таблица ${i + 1}: ${doc.sheetName} ---`);
+    });
+
     const result = await collection.insertMany(docs);
     res.status(200).json({
       message: "Данные сохранены",
