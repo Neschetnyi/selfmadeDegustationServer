@@ -43,12 +43,10 @@ app.post("/update-data", async (req, res) => {
     }));
 
     const result = await collection.insertMany(docs);
-    res
-      .status(200)
-      .json({
-        message: "Данные сохранены",
-        insertedCount: result.insertedCount,
-      });
+    res.status(200).json({
+      message: "Данные сохранены",
+      insertedCount: result.insertedCount,
+    });
   } catch (err) {
     console.error("Ошибка сохранения:", err);
     res.status(500).json({ error: "Ошибка при сохранении данных" });
@@ -63,3 +61,4 @@ app.listen(PORT, async () => {
   await connectToDB();
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });
+/*версия до разбивки на модули под модель Rest API*/
