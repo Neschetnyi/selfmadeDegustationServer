@@ -5,6 +5,6 @@ export async function connectToMongo() {
   await client.connect();
   const db = client.db("degustation");
   const collection = db.collection("entries");
-  console.log("✅ Подключено к MongoDB Atlas");
+  console.log("✅ Подключено к MongoDB Atlas :)");
   return collection;
 }
