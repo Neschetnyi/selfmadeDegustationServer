@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 10000;
 
 (async () => {
   try {
-    const collection = await connectToMongo();
-    app.use("/", createUpdateRouter(collection));
+    const collections = await connectToMongo();
+    app.use("/", createUpdateRouter(collections));
 
     app.get("/", (req, res) => {
       res.send("API для дегустаций с MongoDB работает!");

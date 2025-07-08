@@ -1,4 +1,4 @@
-export async function handleUpdateData(req, res, collection) {
+export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
   const { sheets, timestamp } = req.body;
 
   if (!Array.isArray(sheets)) {
@@ -25,7 +25,7 @@ export async function handleUpdateData(req, res, collection) {
 
       if (!existingDoc) {
         // 🔹 Если документа нет — вставляем
-        await collection.insertOne(newDoc);
+        await degustationProbs.insertOne(newDoc);
         inserted++;
       } else {
         // 🔹 Если есть — сравниваем
@@ -40,7 +40,7 @@ export async function handleUpdateData(req, res, collection) {
           skipped++;
         } else {
           // 🔹 Если отличается — обновляем
-          await collection.replaceOne({ _id: existingDoc._id }, newDoc);
+          await degustationProbs.replaceOne({ _id: existingDoc._id }, newDoc);
           updated++;
         }
       }
