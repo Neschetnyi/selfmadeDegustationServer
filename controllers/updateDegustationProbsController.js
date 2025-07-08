@@ -13,7 +13,7 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
     for (const sheet of sheets) {
       const query = { sheetName: sheet.sheetName };
 
-      const existingDoc = await collection.findOne(query);
+      const existingDoc = await degustationProbs.findOne(query);
 
       const newDoc = {
         timestamp: timestamp ? new Date(timestamp) : new Date(),
