@@ -18,9 +18,9 @@ export async function handleUpdateDegustationDates(req, res, degustationDates) {
       const newDoc = {
         timestamp: timestamp ? new Date(timestamp) : new Date(),
         sheetName: sheet.sheetName,
-        values: sheet.values,
-        backgrounds: sheet.backgrounds,
-        comments: sheet.comments,
+        values: sheet.dateValues,
+        backgrounds: sheet.dateBackgrounds,
+        comments: sheet.dateComments,
       };
 
       if (!existingDoc) {
@@ -30,11 +30,12 @@ export async function handleUpdateDegustationDates(req, res, degustationDates) {
       } else {
         // 🔹 Если есть — сравниваем
         const isSame =
-          JSON.stringify(existingDoc.values) === JSON.stringify(sheet.values) &&
-          JSON.stringify(existingDoc.backgrounds) ===
-            JSON.stringify(sheet.backgrounds) &&
-          JSON.stringify(existingDoc.comments) ===
-            JSON.stringify(sheet.comments);
+          JSON.stringify(existingDoc.dateValues) ===
+            JSON.stringify(sheet.dateValues) &&
+          JSON.stringify(existingDoc.dateBackgrounds) ===
+            JSON.stringify(sheet.dateBackgrounds) &&
+          JSON.stringify(existingDoc.dateComments) ===
+            JSON.stringify(sheet.dateComments);
 
         if (isSame) {
           skipped++;

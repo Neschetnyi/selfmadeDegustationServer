@@ -18,8 +18,8 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
       const newDoc = {
         timestamp: timestamp ? new Date(timestamp) : new Date(),
         sheetName: sheet.sheetName,
-        values: sheet.values,
-        backgrounds: sheet.backgrounds,
+        values: sheet.probsValues,
+        backgrounds: sheet.probsBackgrounds,
         comments: sheet.comments,
       };
 
@@ -30,11 +30,12 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
       } else {
         // 🔹 Если есть — сравниваем
         const isSame =
-          JSON.stringify(existingDoc.values) === JSON.stringify(sheet.values) &&
-          JSON.stringify(existingDoc.backgrounds) ===
-            JSON.stringify(sheet.backgrounds) &&
-          JSON.stringify(existingDoc.comments) ===
-            JSON.stringify(sheet.comments);
+          JSON.stringify(existingDoc.probsValues) ===
+            JSON.stringify(sheet.probsValues) &&
+          JSON.stringify(existingDoc.probsBackgrounds) ===
+            JSON.stringify(sheet.probsBackgrounds) &&
+          JSON.stringify(existingDoc.probsComments) ===
+            JSON.stringify(sheet.probsComments);
 
         if (isSame) {
           skipped++;
