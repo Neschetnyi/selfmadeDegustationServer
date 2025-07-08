@@ -1,5 +1,6 @@
 import express from "express";
 import { handleUpdateDegustationProbs } from "../controllers/updateDegustationProbsController.js";
+import { handleUpdateDegustationDates } from "../controllers/updateDegustationDatesController.js";
 
 export default function createUpdateRouter({
   degustationProbs,
@@ -12,7 +13,7 @@ export default function createUpdateRouter({
   );
 
   router.post("/update-degustationDates", (req, res) =>
-    handleUpdateData(req, res, degustationDates)
+    handleUpdateDegustationDates(req, res, degustationDates)
   );
 
   return router;

@@ -1,4 +1,4 @@
-export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
+export async function handleUpdateDegustationDates(req, res, degustationDates) {
   const { sheets, timestamp } = req.body;
 
   if (!Array.isArray(sheets)) {
@@ -13,7 +13,7 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
     for (const sheet of sheets) {
       const query = { sheetName: sheet.sheetName };
 
-      const existingDoc = await degustationProbs.findOne(query);
+      const existingDoc = await degustationDates.findOne(query);
 
       const newDoc = {
         timestamp: timestamp ? new Date(timestamp) : new Date(),
@@ -25,7 +25,7 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
 
       if (!existingDoc) {
         // 🔹 Если документа нет — вставляем
-        await degustationProbs.insertOne(newDoc);
+        await degustationDates.insertOne(newDoc);
         inserted++;
       } else {
         // 🔹 Если есть — сравниваем
@@ -40,7 +40,7 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
           skipped++;
         } else {
           // 🔹 Если отличается — обновляем
-          await degustationProbs.replaceOne({ _id: existingDoc._id }, newDoc);
+          await degustationDates.replaceOne({ _id: existingDoc._id }, newDoc);
           updated++;
         }
       }
@@ -53,7 +53,7 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
       skipped,
     });
 
-    console.log("📥 Получены данные о пробах от Google Sheets:");
+    console.log("📥 Получены данные о датах от Google Sheets:");
     console.log("⏰ Время:", new Date().toISOString());
     console.log(
       `✅ Добавлено: ${inserted} | 🔄 Обновлено: ${updated} | ⏭ Пропущено: ${skipped}`
