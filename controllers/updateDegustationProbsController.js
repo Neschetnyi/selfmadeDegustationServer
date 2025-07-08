@@ -20,7 +20,7 @@ export async function handleUpdateDegustationProbs(req, res, degustationProbs) {
         sheetName: sheet.sheetName,
         values: sheet.probsValues,
         backgrounds: sheet.probsBackgrounds,
-        comments: sheet.comments,
+        comments: sheet.probsComments,
       };
 
       if (!existingDoc) {
