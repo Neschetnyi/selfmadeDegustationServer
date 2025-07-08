@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 10000;
   try {
     const collections = await connectToMongo();
     app.use("/", createUpdateRouter(collections));
+    app.use("/", createGetRouter(collections));
 
     app.get("/", (req, res) => {
       res.send("API для дегустаций с MongoDB работает!");
