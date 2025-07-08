@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import app from "./app.js";
 import createUpdateRouter from "./routes/updateRoutes.js";
 import { connectToMongo } from "./db/mongoClient.js";
+import createGetRouter from "./routes/getRoutes.js";
 
 dotenv.config();
 
