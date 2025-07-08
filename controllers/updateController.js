@@ -20,6 +20,7 @@ export async function handleUpdateData(req, res, collection) {
         sheetName: sheet.sheetName,
         values: sheet.values,
         backgrounds: sheet.backgrounds,
+        comments: sheet.comments,
       };
 
       if (!existingDoc) {
@@ -31,7 +32,9 @@ export async function handleUpdateData(req, res, collection) {
         const isSame =
           JSON.stringify(existingDoc.values) === JSON.stringify(sheet.values) &&
           JSON.stringify(existingDoc.backgrounds) ===
-            JSON.stringify(sheet.backgrounds);
+            JSON.stringify(sheet.backgrounds) &&
+          JSON.stringify(existingDoc.comments) ===
+            JSON.stringify(sheet.comments);
 
         if (isSame) {
           skipped++;
