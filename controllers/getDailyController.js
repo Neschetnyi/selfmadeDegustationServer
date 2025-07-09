@@ -15,12 +15,12 @@ export async function getDailyData(
       sheetName: "Список проб25 даты",
     });
     const probsData = await degustationProbs.findOne({
-      sheetName: "Список проб25 даты",
+      sheetName: "Список проб25 пробы",
     });
     /*
     console.log("datesData:", datesData);
     console.log("probsData:", probsData);
-*/
+    */
     /*
     // 🔹 Фильтрация по дате (логика уточняется позже)
     const filteredDates = datesData.filter((doc) =>
@@ -29,7 +29,7 @@ export async function getDailyData(
     const filteredProbs = probsData.filter((doc) =>
       doc.sheetName.includes(dateStr)
     );
-*/
+    */
     res.status(200).json({
       date: dateStr,
       degustationDates: datesData,
