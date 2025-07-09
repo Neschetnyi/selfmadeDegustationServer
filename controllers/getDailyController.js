@@ -32,6 +32,7 @@ export async function getDailyData(
     datesData.values.forEach((row, index) => {
       const tempRowIndex = index;
       row.forEach((cell, index) => {
+        console.log("cell", cell);
         const cellDate = new Date(cell).toISOString().split("T")[0];
         const tempCellIndex = index;
         if (cellDate === dateStr) {
