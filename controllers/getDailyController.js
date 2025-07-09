@@ -17,9 +17,12 @@ export async function getDailyData(
     const probsData = await degustationProbs.findOne({
       sheetName: "Список проб25 пробы",
     });
-
+    /*
     console.log("datesData:", datesData);
     console.log("probsData:", probsData);
+*/
+
+    console.log("today:", today);
 
     // 🔹 Фильтрация по дате (логика уточняется позже)
 
@@ -31,7 +34,7 @@ export async function getDailyData(
       row.forEach((cell, index) => {
         const cellDate = new Date(cell).toISOString().split("T")[0];
         const tempCellIndex = index;
-        if (cellDate === dateStr) {
+        if (cellDate === today) {
           rowIndex = tempRowIndex;
           cellIndex = tempCellIndex;
         }
