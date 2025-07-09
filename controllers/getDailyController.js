@@ -22,7 +22,7 @@ export async function getDailyData(
     console.log("probsData:", probsData);
 */
 
-    console.log("today:", today);
+    console.log("today:", dateStr);
 
     // 🔹 Фильтрация по дате (логика уточняется позже)
 
@@ -34,7 +34,7 @@ export async function getDailyData(
       row.forEach((cell, index) => {
         const cellDate = new Date(cell).toISOString().split("T")[0];
         const tempCellIndex = index;
-        if (cellDate === today) {
+        if (cellDate === dateStr) {
           rowIndex = tempRowIndex;
           cellIndex = tempCellIndex;
         }
@@ -46,6 +46,8 @@ export async function getDailyData(
       background: datesData.backgrounds[rowIndex][cellIndex],
       comment: datesData.comments[rowIndex][cellIndex],
     };
+
+    console.log("sortedDateData", sortedDateData);
 
     res.status(200).json({
       date: dateStr,
