@@ -83,7 +83,9 @@ export async function getDailyData(
     probsDataRowCellArray.forEach((element) => {
       porbsToDegustate.push({
         lable: probsData.values[element[0]][2],
-        aging: probsData.values[element[0]][element[1]],
+        aging: probsData.values[element[0]][element[1]]
+          .toISOString()
+          .split("T")[0],
       });
     });
 
