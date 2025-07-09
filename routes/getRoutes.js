@@ -3,6 +3,7 @@ import {
   getDegustationProbs,
   getDegustationDates,
 } from "../controllers/getDegustationDataController.js";
+import { getDailyData } from "../controllers/getDailyController.js";
 
 export default function createGetRouter({
   degustationProbs,
@@ -16,6 +17,10 @@ export default function createGetRouter({
 
   router.get("/get-degustationDates", (req, res) =>
     getDegustationDates(req, res, degustationDates)
+  );
+
+  router.get("/get-daily", (req, res) =>
+    getDailyData(req, res, { degustationDates, degustationProbs })
   );
 
   return router;

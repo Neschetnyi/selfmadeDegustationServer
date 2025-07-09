@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 10000;
 (async () => {
   try {
     const collections = await connectToMongo();
+
     app.use("/", createUpdateRouter(collections));
     app.use("/", createGetRouter(collections));
 
