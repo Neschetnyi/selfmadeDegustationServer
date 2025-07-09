@@ -26,22 +26,22 @@ export async function getDailyData(
 
     // 🔹 Фильтрация по дате (логика уточняется позже)
 
-    let rowIndex;
-    let cellIndex;
+    let datesDataRowIndex;
+    let datesDataCellIndex;
 
     datesData.values.forEach((row, rIndex) => {
-      console.log("row:", row);
+      console.log("datesData row:", row);
 
       row.forEach((cell, cIndex) => {
         // Проверка: есть ли значение и можно ли его превратить в дату
         if (cell) {
-          console.log("cell:", cell);
+          console.log("datesData cell:", cell);
           const parsed = new Date(cell);
           if (!isNaN(parsed)) {
             const cellDate = parsed.toISOString().split("T")[0];
             if (cellDate === dateStr) {
-              rowIndex = rIndex;
-              cellIndex = cIndex;
+              datesDataRowIndex = rIndex;
+              datesDataCellIndex = cIndex;
             }
           }
         }
@@ -49,16 +49,50 @@ export async function getDailyData(
     });
 
     const sortedDateData = {
-      value: datesData.values[rowIndex][cellIndex],
-      background: datesData.backgrounds[rowIndex][cellIndex],
-      comment: datesData.comments[rowIndex][cellIndex],
+      value: datesData.values[datesDataRowIndex][datesDataCellIndex],
+      background: datesData.backgrounds[datesDataRowIndex][datesDataCellIndex],
+      comment: datesData.comments[datesDataRowIndex][datesDataCellIndex],
     };
 
     console.log("sortedDateData", sortedDateData);
 
+    let probsDataRowIndex;
+    let probsDataCellindex;
+
+    let probsDataRowCellArray = [];
+
+    probsData.backgrounds.forEach((row, index) => {
+      let tempRowIndex = index;
+      console.log("probsData row:", row);
+
+      row.forEach((cell, index) => {
+        let tempCellIndex = index;
+        if (cell === sortedDateData.background) {
+          console.log("probsData cell:", cell);
+          probsDataRowIndex = tempRowIndex;
+          probsDataCellindex = tempCellIndex;
+          probsDataRowCellArray.push([probsDataRowIndex, probsDataCellindex]);
+        }
+      });
+    });
+
+    console.log("probsDataRowCellArray", probsDataRowCellArray);
+
+    let porbsToDegustate = [];
+
+    probsDataRowCellArray.forEach((element) => {
+      porbsToDegustate.push({
+        lable: probsData[values][element[0][2]],
+        aging: probsData[values][element[0][element[1]]],
+      });
+    });
+
+    console.log("porbsToDegustate", porbsToDegustate);
+
     res.status(200).json({
       date: dateStr,
       degustationDate: sortedDateData,
+      probsToDegustate: porbsToDegustate,
     });
 
     console.log("📤 Отправлены данные за:", dateStr);
