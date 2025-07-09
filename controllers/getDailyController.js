@@ -11,12 +11,17 @@ export async function getDailyData(
     const dateStr = today.toISOString().split("T")[0]; // "YYYY-MM-DD"
 
     // 🔹 Получаем все данные
-    const datesData = await degustationDates.find().toArray();
-    const probsData = await degustationProbs.find().toArray();
-
+    const datesData = await degustationDates.findOne({
+      sheetName: "Список проб25 даты",
+    });
+    const probsData = await degustationProbs.findOne({
+      sheetName: "Список проб25 даты",
+    });
+    /*
     console.log("datesData:", datesData);
     console.log("probsData:", probsData);
-
+*/
+    /*
     // 🔹 Фильтрация по дате (логика уточняется позже)
     const filteredDates = datesData.filter((doc) =>
       doc.sheetName.includes(dateStr)
@@ -24,11 +29,11 @@ export async function getDailyData(
     const filteredProbs = probsData.filter((doc) =>
       doc.sheetName.includes(dateStr)
     );
-
+*/
     res.status(200).json({
       date: dateStr,
-      degustationDates: filteredDates,
-      degustationProbs: filteredProbs,
+      degustationDates: datesData,
+      degustationProbs: probsData,
     });
 
     console.log("📤 Отправлены данные за:", dateStr);
