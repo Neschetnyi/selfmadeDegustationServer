@@ -29,18 +29,21 @@ export async function getDailyData(
     let rowIndex;
     let cellIndex;
 
-    datesData.values.forEach((row, index) => {
-      console.log("row", row);
+    datesData.values.forEach((row, rIndex) => {
+      console.log("row:", row);
 
-      const tempRowIndex = index;
-
-      row.forEach((cell, index) => {
-        console.log("cell", cell);
-        const cellDate = new Date(cell).toISOString().split("T")[0];
-        const tempCellIndex = index;
-        if (cellDate === dateStr) {
-          rowIndex = tempRowIndex;
-          cellIndex = tempCellIndex;
+      row.forEach((cell, cIndex) => {
+        // Проверка: есть ли значение и можно ли его превратить в дату
+        if (cell) {
+          console.log("cell:", cell);
+          const parsed = new Date(cell);
+          if (!isNaN(parsed)) {
+            const cellDate = parsed.toISOString().split("T")[0];
+            if (cellDate === dateStr) {
+              rowIndex = rIndex;
+              cellIndex = cIndex;
+            }
+          }
         }
       });
     });
