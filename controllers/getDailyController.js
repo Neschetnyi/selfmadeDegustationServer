@@ -14,6 +14,9 @@ export async function getDailyData(
     const datesData = await degustationDates.find().toArray();
     const probsData = await degustationProbs.find().toArray();
 
+    console.log("datesData:", datesData);
+    console.log("probsData:", probsData);
+
     // 🔹 Фильтрация по дате (логика уточняется позже)
     const filteredDates = datesData.filter((doc) =>
       doc.sheetName.includes(dateStr)
