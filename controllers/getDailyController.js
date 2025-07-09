@@ -17,22 +17,36 @@ export async function getDailyData(
     const probsData = await degustationProbs.findOne({
       sheetName: "Список проб25 пробы",
     });
-    /*
+
     console.log("datesData:", datesData);
     console.log("probsData:", probsData);
-    */
-    /*
+
     // 🔹 Фильтрация по дате (логика уточняется позже)
-    const filteredDates = datesData.filter((doc) =>
-      doc.sheetName.includes(dateStr)
-    );
-    const filteredProbs = probsData.filter((doc) =>
-      doc.sheetName.includes(dateStr)
-    );
-    */
+
+    let rowIndex;
+    let cellIndex;
+
+    datesData.values.forEach((row, index) => {
+      const tempRowIndex = index;
+      row.forEach((cell, index) => {
+        const cellDate = new Date(cell).toISOString().split("T")[0];
+        const tempCellIndex = index;
+        if (cellDate === dateStr) {
+          rowIndex = tempRowIndex;
+          cellIndex = tempCellIndex;
+        }
+      });
+    });
+
+    const sortedDateData = {
+      value: datesData.values[rowIndex][cellIndex],
+      background: datesData.backgrounds[rowIndex][cellIndex],
+      comment: datesData.comments[rowIndex][cellIndex],
+    };
+
     res.status(200).json({
       date: dateStr,
-      degustationDates: datesData,
+      degustationDate: sortedDateData,
       degustationProbs: probsData,
     });
 
