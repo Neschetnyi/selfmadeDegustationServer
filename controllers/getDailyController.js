@@ -59,7 +59,6 @@ export async function getDailyData(
     res.status(200).json({
       date: dateStr,
       degustationDate: sortedDateData,
-      degustationProbs: probsData,
     });
 
     console.log("📤 Отправлены данные за:", dateStr);
